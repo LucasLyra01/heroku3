@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send({
-        message: 'Rodando'
+        message: 'Rodando - v2'
     })
 })
 
