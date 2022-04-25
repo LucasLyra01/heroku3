@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const mongo = require('./mongodb/mongo.js');
 const app = express();
 
 const port = process.env.PORT
@@ -17,7 +18,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send({
-        message: 'Rodando - v2'
+        message: 'Rodando - v3'
     })
 })
 
