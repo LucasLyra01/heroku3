@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send({
-        message: 'Rodando - v8'
+        message: 'API V9'
     })
 });
 

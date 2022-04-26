@@ -87,7 +87,7 @@ exports.listarAgendamentosPorNome = async (req, res) => {
 exports.listarTodosOsNomes = async (req, res) => {
 
     const agendamentos = await AgendamentosModel.findAll();
-    let vetorNomes = []
+    let vetorNomes = [];
 
     agendamentos.map((response) => {
         vetorNomes.push(response.nome)
@@ -96,5 +96,21 @@ exports.listarTodosOsNomes = async (req, res) => {
     res.json({
         status: 'ok',
         agendamentos: vetorNomes
+    });
+}
+
+exports.listarHorarios = async (req, res) => {
+
+    const agendamentos = await AgendamentosModel.findAll();
+    let vetorHorarios = [];
+
+    agendamentos.map((response) => {
+        vetorHorarios.push(response.horario);
+        console.log(response.horario, response.nome)
+    });
+
+    res.json({
+        status:'ok',
+        message: vetorHorarios
     });
 }
