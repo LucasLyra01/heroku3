@@ -3,8 +3,10 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 // const mongo = require('./mongodb/mongo.js');
-const postgres = require('./postgres/postgresql.js');
+const postgres = require('./postgres/postgresql.js').sincronizaPostgres;
 const app = express();
+
+(async () => postgres())();
 
 const pingRouter = require('./routes/index.js');
 
@@ -21,7 +23,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send({
-        message: 'Rodando - v4'
+        message: 'Rodando - v5'
     })
 });
 

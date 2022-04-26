@@ -1,15 +1,15 @@
-const Sequelize = require('sequelize');
-const sequelize = require('../postgres/postgresql');
+const { DataTypes } = require('sequelize');
+const postgres = require('../postgres/postgresql').sequelize;
 
-const Agendamentos = sequelize.define('agendamentos', {
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true
-    },
-    nome: {
-        type: Sequelize.STRING,
-
-    }
+const Agendamentos = postgres.define('agendamentos', {
+    nome: DataTypes.STRING
 })
+
+const init = async () => {
+    await Agendamentos.sync();
+    console.log('BASE DE DADOS CRIADA')
+}
+
+init();
 
 module.exports = Agendamentos;
