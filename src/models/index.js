@@ -2,7 +2,9 @@ const { DataTypes } = require('sequelize');
 const postgres = require('../postgres/postgresql').sequelize;
 
 const Agendamentos = postgres.define('agendamentos', {
-    nome: DataTypes.STRING
+    nome: DataTypes.STRING,
+    data: DataTypes.STRING,
+    horario: DataTypes.STRING
 })
 
 const init = async () => {

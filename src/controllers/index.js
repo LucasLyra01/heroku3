@@ -1,26 +1,35 @@
 const AgendamentosModel = require('../models/index');
 const { sequelize } = require('../postgres/postgresql');
+const { Op } = require('sequelize')
 
 exports.CadastrarAgendamento = async (req, res) => {
 
     const agendamento = req.body;
 
+    console.log(agendamento)
+
+    // const AgendamentoExiste = await AgendamentosModel.findAll({
+    //     where: {
+    //         nome: agendamento.nome,
+    //     }
+    // });
+    
     const AgendamentoExiste = await AgendamentosModel.findAll({
         where: {
-            nome: agendamento.nome
+            [Op.and]: [{ data: agendamento.data }, { horario: agendamento.horario }]
         }
-    })
-
-    console.log(AgendamentoExiste);
+    });
 
     if(AgendamentoExiste.length > 0){
         res.json({
             status: 'ok',
-            message: 'O nome já existe na base de dados', AgendamentoExiste
+            message: 'Data e horário não disponíveis',
         });
     }else{
         const InserirAgendamento = await AgendamentosModel.create({
             nome: agendamento.nome,
+            data: agendamento.data,
+            horario: agendamento.horario
         });
 
         res.json({
