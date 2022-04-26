@@ -23,7 +23,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send({
-        message: 'Rodando - v6'
+        message: 'Rodando - v7'
     })
 });
 

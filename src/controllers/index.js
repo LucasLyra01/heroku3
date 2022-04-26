@@ -1,4 +1,5 @@
 const AgendamentosModel = require('../models/index');
+const { sequelize } = require('../postgres/postgresql');
 
 exports.CadastrarAgendamento = async (req, res) => {
 
@@ -29,32 +30,6 @@ exports.CadastrarAgendamento = async (req, res) => {
     }
 }
 
-// exports.CadastrarAgendamento = {
-    
-//     all(req, res, next){
-//         AgendamentosModel.findAll().then((result) => {
-//             res.json(result);
-//         });
-//     },
-//     create(req, res, next) {
-//         const agendamento = req.body;
-
-//         console.log(agendamento.nome);
-
-//         AgendamentosModel.create(agendamento.nome)
-//             .then((result) => {
-//                 res.status(201).json(result);
-//             })
-//             .catch((err) => { 
-//                 console.log(err) 
-//                 res.json({
-//                     status: 'error',
-//                     error: err
-//                 })
-//             })
-//     }
-// }
-
 exports.listarAgendamentos = async (req, res) => {
     try {
         const agendamentos = await AgendamentosModel.findAll();
@@ -69,4 +44,48 @@ exports.listarAgendamentos = async (req, res) => {
             message: 'Ocorreu um erro', error
         })
     }
+}
+
+exports.listarAgendamentosPorNome = async (req, res) => {
+    const agendamento = req.params;
+
+    try {
+        const AgendamentoExiste = await AgendamentosModel.findAll({
+            where: {
+                nome: agendamento.nome
+            }
+        })
+
+        if(AgendamentoExiste.length > 0) {
+            res.json({
+                status: 'ok',
+                message: AgendamentoExiste
+            });
+            console.log('Nome encontrado na base de dados')
+
+        }else {
+            res.json({
+                status: 'erro',
+                message: 'Não foi possível encontrar o nome inserido'
+            });
+            console.log('Não foi possível encontrar o nome inserido')
+        }
+    } catch (error) {   
+        console.log(error);
+    }
+}
+
+exports.listarTodosOsNomes = async (req, res) => {
+
+    const agendamentos = await AgendamentosModel.findAll();
+    let vetorNomes = []
+
+    agendamentos.map((response) => {
+        vetorNomes.push(response.nome)
+    })
+
+    res.json({
+        status: 'ok',
+        agendamentos: vetorNomes
+    });
 }
